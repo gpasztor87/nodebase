@@ -1,5 +1,5 @@
 import AuthWrapper from "@/features/auth/components/auth-wrapper";
-import { LoginForm } from "@/features/auth/components/login-form";
+import { SignInForm } from "@/features/auth/components/sign-in-form";
 import { requireUnauth } from "@/lib/auth-utils";
 
 const Page = async () => {
@@ -10,7 +10,7 @@ const Page = async () => {
       title="Sign in"
       description="Welcome back! Please sign in to continue"
     >
-      <LoginForm />
+      <SignInForm />
     </AuthWrapper>
   );
 };

@@ -17,40 +17,31 @@ import { useForm } from "react-hook-form";
 import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { PasswordInput } from "@/components/ui/password-input";
 
-const registerSchema = z
-  .object({
-    email: z.email({
-      message: "Please enter a valid email address",
-    }),
-    password: z.string().min(8, {
-      message: "Your password must contain 6 or more characters",
-    }),
-    confirmPassword: z.string(),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords don't match",
-    path: ["confirmPassword"],
-  });
+const SignInSchema = z.object({
+  email: z.email({
+    message: "Please enter a valid email address",
+  }),
+  password: z.string().min(8, {
+    message: "Your password must contain 8 or more characters",
+  }),
+});
 
-type RegisterFormValues = z.infer<typeof registerSchema>;
-
-export function RegisterForm() {
+export function SignInForm() {
   const router = useRouter();
 
   const form = useForm({
-    resolver: zodResolver(registerSchema),
+    resolver: zodResolver(SignInSchema),
     defaultValues: {
       email: "",
       password: "",
-      confirmPassword: "",
     },
   });
 
-  const onSubmit = async (values: RegisterFormValues) => {
-    await authClient.signUp.email(
+  const onSubmit = async (values: z.infer<typeof SignInSchema>) => {
+    await authClient.signIn.email(
       {
-        name: values.email,
         email: values.email,
         password: values.password,
         callbackURL: "/",
@@ -77,9 +68,13 @@ export function RegisterForm() {
             control={form.control}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Email</FormLabel>
+                <FormLabel>Email address</FormLabel>
                 <FormControl>
-                  <Input type="email" {...field} />
+                  <Input
+                    type="email"
+                    autoComplete="email webauthn"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -92,32 +87,22 @@ export function RegisterForm() {
               <FormItem>
                 <FormLabel>Password</FormLabel>
                 <FormControl>
-                  <Input type="password" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            name="confirmPassword"
-            control={form.control}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Confirm password</FormLabel>
-                <FormControl>
-                  <Input type="password" {...field} />
+                  <PasswordInput
+                    autoComplete="current-password webauthn"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
           <Button type="submit" className="w-full" disabled={isPending}>
-            Sign up
+            Sign in
           </Button>
           <div className="text-center text-sm">
-            Already have an account?{" "}
-            <Link href="/login" className="underline underline-offset-4">
-              Login
+            Don&apos;t have an account?{" "}
+            <Link href="/sign-up" className="underline underline-offset-4">
+              Sign up
             </Link>
           </div>
         </div>

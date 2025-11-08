@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { config } from "@/config";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -9,8 +10,8 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
           href="/"
           className="flex items-center gap-2 self-center font-medium"
         >
-          <Image src="/logos/logo.svg" width={30} height={30} alt="Nodebase" />
-          Nodebase
+          <Image src="/logo.svg" width={30} height={30} alt="Nodebase" />
+          {config.site.name}
         </Link>
         {children}
       </div>

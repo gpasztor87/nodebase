@@ -13,36 +13,36 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { PasswordInput } from "@/components/ui/password-input";
 import { useForm } from "react-hook-form";
 import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
-const loginSchema = z.object({
+const SignUpSchema = z.object({
   email: z.email({
     message: "Please enter a valid email address",
   }),
   password: z.string().min(8, {
-    message: "Your password must contain 8 or more characters",
+    message: "Your password must contain 6 or more characters",
   }),
 });
 
-type LoginFormValues = z.infer<typeof loginSchema>;
-
-export function LoginForm() {
+export function SignUpForm() {
   const router = useRouter();
 
   const form = useForm({
-    resolver: zodResolver(loginSchema),
+    resolver: zodResolver(SignUpSchema),
     defaultValues: {
       email: "",
       password: "",
     },
   });
 
-  const onSubmit = async (values: LoginFormValues) => {
-    await authClient.signIn.email(
+  const onSubmit = async (values: z.infer<typeof SignUpSchema>) => {
+    await authClient.signUp.email(
       {
+        name: values.email,
         email: values.email,
         password: values.password,
         callbackURL: "/",
@@ -69,9 +69,13 @@ export function LoginForm() {
             control={form.control}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Email</FormLabel>
+                <FormLabel>Email address</FormLabel>
                 <FormControl>
-                  <Input type="email" {...field} />
+                  <Input
+                    type="email"
+                    autoComplete="email webauthn"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -84,19 +88,22 @@ export function LoginForm() {
               <FormItem>
                 <FormLabel>Password</FormLabel>
                 <FormControl>
-                  <Input type="password" {...field} />
+                  <PasswordInput
+                    autoComplete="current-password webauthn"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
           <Button type="submit" className="w-full" disabled={isPending}>
-            Login
+            Sign up
           </Button>
           <div className="text-center text-sm">
-            Don&apos;t have an account?{" "}
-            <Link href="/signup" className="underline underline-offset-4">
-              Sign up
+            Already have an account?{" "}
+            <Link href="/sign-in" className="underline underline-offset-4">
+              Sign in
             </Link>
           </div>
         </div>
