@@ -1,6 +1,6 @@
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
-import { auth } from "./auth";
+import { auth } from "../../../lib/auth";
 
 export const requireAuth = async () => {
   const session = await auth.api.getSession({
@@ -8,7 +8,7 @@ export const requireAuth = async () => {
   });
 
   if (!session) {
-    redirect("/login");
+    redirect("/sign-in");
   }
 
   return session;

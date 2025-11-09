@@ -33,7 +33,7 @@ export default function RootLayout({
       >
         <ThemeProvider
           attribute="class"
-          defaultTheme={config.theme}
+          defaultTheme={config.site.theme}
           enableSystem
           disableTransitionOnChange
         >

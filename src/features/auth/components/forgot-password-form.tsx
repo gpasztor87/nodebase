@@ -13,51 +13,41 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { LoadingSwap } from "@/components/ui/loading-swap";
-import { PasswordInput } from "@/components/ui/password-input";
 import { useForm } from "react-hook-form";
 import { authClient } from "@/lib/auth-client";
-import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { LoadingSwap } from "@/components/ui/loading-swap";
 
-const SignUpSchema = z.object({
+const ForgotPasswordSchema = z.object({
   email: z.email({
-    message: "Please enter a valid email address",
-  }),
-  password: z.string().min(8, {
-    message: "Your password must contain 8 or more characters",
+    message: "Email address must be a valid email address",
   }),
 });
 
-export function SignUpForm() {
-  const router = useRouter();
-
+export function ForgotPasswordForm() {
   const form = useForm({
-    resolver: zodResolver(SignUpSchema),
+    resolver: zodResolver(ForgotPasswordSchema),
     defaultValues: {
       email: "",
-      password: "",
     },
   });
 
-  const onSubmit = async (values: z.infer<typeof SignUpSchema>) => {
-    await authClient.signUp.email(
+  const onSubmit = async (values: z.infer<typeof ForgotPasswordSchema>) => {
+    await authClient.requestPasswordReset(
       {
-        name: values.email,
         email: values.email,
-        password: values.password,
-        callbackURL: "/",
+        redirectTo: "/reset-password",
       },
       {
-        onSuccess: () => {
-          router.push(
-            `/verify-email?email=${encodeURIComponent(values.email)}`
+        onError: (error) => {
+          toast.error(
+            error.error.message || "Failed to send password reset email",
           );
         },
-        onError: (ctx) => {
-          toast.error(ctx.error.message || "Failed to sign up");
+        onSuccess: () => {
+          toast.success("Password reset email sent");
         },
-      }
+      },
     );
   };
 
@@ -84,27 +74,11 @@ export function SignUpForm() {
               </FormItem>
             )}
           />
-          <FormField
-            name="password"
-            control={form.control}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Password</FormLabel>
-                <FormControl>
-                  <PasswordInput
-                    autoComplete="current-password webauthn"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
           <Button type="submit" className="w-full" disabled={isSubmitting}>
-            <LoadingSwap isLoading={isSubmitting}>Sign up</LoadingSwap>
+            <LoadingSwap isLoading={isSubmitting}>Reset password</LoadingSwap>
           </Button>
           <div className="text-center text-sm text-muted-foreground">
-            Already have an account?{" "}
+            Password recovered?{" "}
             <Link href="/sign-in" className="hover:underline">
               Sign in
             </Link>

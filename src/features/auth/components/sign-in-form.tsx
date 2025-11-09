@@ -18,6 +18,7 @@ import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { PasswordInput } from "@/components/ui/password-input";
+import { LoadingSwap } from "@/components/ui/loading-swap";
 
 const SignInSchema = z.object({
   email: z.email({
@@ -51,13 +52,19 @@ export function SignInForm() {
           router.push("/");
         },
         onError: (ctx) => {
-          toast.error(ctx.error.message);
+          if (ctx.error.code === "EMAIL_NOT_VERIFIED") {
+            router.push(
+              `/verify-email?email=${encodeURIComponent(values.email)}`
+            );
+          }
+
+          toast.error(ctx.error.message || "Failed to sign in");
         },
       }
     );
   };
 
-  const isPending = form.formState.isSubmitting;
+  const { isSubmitting } = form.formState;
 
   return (
     <Form {...form}>
@@ -85,7 +92,15 @@ export function SignInForm() {
             control={form.control}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Password</FormLabel>
+                <div className="flex items-center justify-between">
+                  <FormLabel>Password</FormLabel>
+                  <Link
+                    href="/forgot-password"
+                    className="text-sm hover:underline"
+                  >
+                    Forgot password?
+                  </Link>
+                </div>
                 <FormControl>
                   <PasswordInput
                     autoComplete="current-password webauthn"
@@ -96,12 +111,12 @@ export function SignInForm() {
               </FormItem>
             )}
           />
-          <Button type="submit" className="w-full" disabled={isPending}>
-            Sign in
+          <Button type="submit" className="w-full" disabled={isSubmitting}>
+            <LoadingSwap isLoading={isSubmitting}>Sign in</LoadingSwap>
           </Button>
-          <div className="text-center text-sm">
+          <div className="text-center text-sm text-muted-foreground">
             Don&apos;t have an account?{" "}
-            <Link href="/sign-up" className="underline underline-offset-4">
+            <Link href="/sign-up" className="hover:underline">
               Sign up
             </Link>
           </div>
