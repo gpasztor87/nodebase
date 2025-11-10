@@ -1,8 +1,13 @@
-import { useTRPC } from "@/trpc/client";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { authClient } from "@/lib/auth-client";
+import { useQuery } from "@tanstack/react-query";
 
 export const useCurrentUser = () => {
-  const trpc = useTRPC();
+  return useQuery({
+    queryKey: ["currentUser"],
+    queryFn: async () => {
+      const { data } = await authClient.getSession();
 
-  return useSuspenseQuery(trpc.getCurrentUser.queryOptions());
+      return data;
+    },
+  });
 };

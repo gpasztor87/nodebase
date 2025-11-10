@@ -29,10 +29,12 @@ import { authClient } from "@/lib/auth-client";
 export function NavUser({
   user,
 }: {
-  user: { name: string; email: string; image?: string | null };
+  user?: { name: string; email: string; image?: string | null };
 }) {
   const { isMobile } = useSidebar();
   const router = useRouter();
+
+  if (!user) return;
 
   return (
     <SidebarMenu>

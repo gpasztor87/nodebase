@@ -35,7 +35,7 @@ const menuItems = [
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const pathname = usePathname();
 
-  const { data: user } = useCurrentUser();
+  const { data } = useCurrentUser();
 
   return (
     <Sidebar collapsible="icon" {...props}>
@@ -79,7 +79,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </SidebarMenu>
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={user} />
+        <NavUser user={data?.user} />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
