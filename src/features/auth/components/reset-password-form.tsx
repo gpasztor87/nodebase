@@ -1,6 +1,9 @@
 "use client";
 
 import { z } from "zod";
+import { toast } from "sonner";
+import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import {
@@ -11,12 +14,10 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { useForm } from "react-hook-form";
-import { authClient } from "@/lib/auth-client";
-import { toast } from "sonner";
+import { Field, FieldGroup } from "@/components/ui/field";
 import { LoadingSwap } from "@/components/ui/loading-swap";
 import { PasswordInput } from "@/components/ui/password-input";
-import { useRouter } from "next/navigation";
+import { authClient } from "@/lib/auth-client";
 
 const ResetPasswordSchema = z.object({
   password: z.string().min(8, {
@@ -63,7 +64,7 @@ export function ResetPasswordForm({ token }: { token: string }) {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
-        <div className="grid gap-6">
+        <FieldGroup>
           <FormField
             name="password"
             control={form.control}
@@ -80,10 +81,12 @@ export function ResetPasswordForm({ token }: { token: string }) {
               </FormItem>
             )}
           />
-          <Button type="submit" className="w-full" disabled={isSubmitting}>
-            <LoadingSwap isLoading={isSubmitting}>Reset password</LoadingSwap>
-          </Button>
-        </div>
+          <Field>
+            <Button type="submit" className="w-full" disabled={isSubmitting}>
+              <LoadingSwap isLoading={isSubmitting}>Reset password</LoadingSwap>
+            </Button>
+          </Field>
+        </FieldGroup>
       </form>
     </Form>
   );

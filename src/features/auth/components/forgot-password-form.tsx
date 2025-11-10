@@ -1,7 +1,9 @@
 "use client";
 
-import Link from "next/link";
 import { z } from "zod";
+import Link from "next/link";
+import { toast } from "sonner";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -13,10 +15,9 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { useForm } from "react-hook-form";
 import { authClient } from "@/lib/auth-client";
-import { toast } from "sonner";
 import { LoadingSwap } from "@/components/ui/loading-swap";
+import { Field, FieldDescription, FieldGroup } from "@/components/ui/field";
 
 const ForgotPasswordSchema = z.object({
   email: z.email({
@@ -56,7 +57,7 @@ export function ForgotPasswordForm() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
-        <div className="grid gap-6">
+        <FieldGroup>
           <FormField
             name="email"
             control={form.control}
@@ -74,16 +75,18 @@ export function ForgotPasswordForm() {
               </FormItem>
             )}
           />
-          <Button type="submit" className="w-full" disabled={isSubmitting}>
-            <LoadingSwap isLoading={isSubmitting}>Reset password</LoadingSwap>
-          </Button>
-          <div className="text-center text-sm text-muted-foreground">
-            Password recovered?{" "}
-            <Link href="/sign-in" className="hover:underline">
-              Sign in
-            </Link>
-          </div>
-        </div>
+          <Field>
+            <Button type="submit" className="w-full" disabled={isSubmitting}>
+              <LoadingSwap isLoading={isSubmitting}>Reset password</LoadingSwap>
+            </Button>
+            <FieldDescription className="text-center">
+              Password recovered?{" "}
+              <Link href="/sign-in" className="underline underline-offset-4">
+                Sign in
+              </Link>
+            </FieldDescription>
+          </Field>
+        </FieldGroup>
       </form>
     </Form>
   );

@@ -7,7 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
+import { Field, FieldGroup, FieldSeparator } from "@/components/ui/field";
 import { supportedOAuthProviderDetails } from "../lib/providers";
 import authConfig from "@/config/auth.config";
 import { BetterAuthActionButton } from "./better-auth-action-button";
@@ -36,10 +36,10 @@ const AuthWrapper = ({
           <CardDescription>{description}</CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="grid gap-6">
+          <FieldGroup>
             {socialLogin && providers.length > 0 && (
               <>
-                <div className="flex flex-col gap-4">
+                <Field>
                   {providers.map((provider) => {
                     const details = supportedOAuthProviderDetails[provider];
                     if (!details) return null;
@@ -63,21 +63,12 @@ const AuthWrapper = ({
                       </BetterAuthActionButton>
                     );
                   })}
-                </div>
-                <div className="relative">
-                  <div className="absolute inset-0 flex items-center">
-                    <Separator />
-                  </div>
-                  <div className="relative flex justify-center text-xs uppercase">
-                    <span className="bg-card px-2 text-background-foreground">
-                      or
-                    </span>
-                  </div>
-                </div>
+                </Field>
+                <FieldSeparator>or</FieldSeparator>
               </>
             )}
             {children}
-          </div>
+          </FieldGroup>
         </CardContent>
       </Card>
     </div>

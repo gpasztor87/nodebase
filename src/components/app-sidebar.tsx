@@ -2,7 +2,10 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
+import { FolderOpenIcon } from "lucide-react";
+import { useTRPC } from "@/trpc/client";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import {
   Sidebar,
   SidebarContent,
@@ -13,10 +16,10 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarRail,
 } from "@/components/ui/sidebar";
 import appConfig from "@/config/app.config";
-import { FolderOpenIcon, LogOutIcon } from "lucide-react";
-import { authClient } from "@/lib/auth-client";
+import { NavUser } from "./nav-user";
 
 const menuItems = [
   {
@@ -32,8 +35,10 @@ const menuItems = [
 ];
 
 export function AppSidebar() {
-  const router = useRouter();
+  const trpc = useTRPC();
   const pathname = usePathname();
+
+  const { data: user } = useSuspenseQuery(trpc.getCurrentUser.queryOptions());
 
   return (
     <Sidebar collapsible="icon">
@@ -80,27 +85,9 @@ export function AppSidebar() {
         </SidebarMenu>
       </SidebarContent>
       <SidebarFooter>
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <SidebarMenuButton
-              tooltip="Sign out"
-              className="gap-x-4 h-10 px-4"
-              onClick={() =>
-                authClient.signOut({
-                  fetchOptions: {
-                    onSuccess: () => {
-                      router.push("/sign-in");
-                    },
-                  },
-                })
-              }
-            >
-              <LogOutIcon className="h-4 w-4" />
-              <span>Sign out</span>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-        </SidebarMenu>
+        <NavUser user={user} />
       </SidebarFooter>
+      <SidebarRail />
     </Sidebar>
   );
 }

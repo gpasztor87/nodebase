@@ -1,7 +1,9 @@
 "use client";
 
-import Link from "next/link";
 import { z } from "zod";
+import { toast } from "sonner";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -13,12 +15,11 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { useForm } from "react-hook-form";
-import { authClient } from "@/lib/auth-client";
-import { useRouter } from "next/navigation";
-import { toast } from "sonner";
+import { Field, FieldDescription, FieldGroup } from "@/components/ui/field";
 import { PasswordInput } from "@/components/ui/password-input";
 import { LoadingSwap } from "@/components/ui/loading-swap";
+import { useForm } from "react-hook-form";
+import { authClient } from "@/lib/auth-client";
 
 const SignInSchema = z.object({
   email: z.email({
@@ -54,13 +55,13 @@ export function SignInForm() {
         onError: (ctx) => {
           if (ctx.error.code === "EMAIL_NOT_VERIFIED") {
             router.push(
-              `/verify-email?email=${encodeURIComponent(values.email)}`
+              `/verify-email?email=${encodeURIComponent(values.email)}`,
             );
           }
 
           toast.error(ctx.error.message || "Failed to sign in");
         },
-      }
+      },
     );
   };
 
@@ -69,15 +70,16 @@ export function SignInForm() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
-        <div className="grid gap-6">
+        <FieldGroup>
           <FormField
             name="email"
             control={form.control}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Email address</FormLabel>
+                <FormLabel htmlFor="email">Email address</FormLabel>
                 <FormControl>
                   <Input
+                    id="email"
                     type="email"
                     autoComplete="email webauthn"
                     {...field}
@@ -111,16 +113,18 @@ export function SignInForm() {
               </FormItem>
             )}
           />
-          <Button type="submit" className="w-full" disabled={isSubmitting}>
-            <LoadingSwap isLoading={isSubmitting}>Sign in</LoadingSwap>
-          </Button>
-          <div className="text-center text-sm text-muted-foreground">
-            Don&apos;t have an account?{" "}
-            <Link href="/sign-up" className="hover:underline">
-              Sign up
-            </Link>
-          </div>
-        </div>
+          <Field>
+            <Button type="submit" className="w-full" disabled={isSubmitting}>
+              <LoadingSwap isLoading={isSubmitting}>Sign in</LoadingSwap>
+            </Button>
+            <FieldDescription className="text-center">
+              Don&apos;t have an account?{" "}
+              <Link href="/sign-up" className="underline underline-offset-4">
+                Sign up
+              </Link>
+            </FieldDescription>
+          </Field>
+        </FieldGroup>
       </form>
     </Form>
   );

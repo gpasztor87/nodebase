@@ -19,7 +19,7 @@ const EmailConfigSchema = z.object({
   from: z
     .email()
     .describe(
-      "The email address of the sender. All email addresses can be plain or formatted."
+      "The email address of the sender. All email addresses can be plain or formatted.",
     ),
 
   auth: z.object({
@@ -27,7 +27,7 @@ const EmailConfigSchema = z.object({
       .string()
       .min(1, "Missing MAIL_USERNAME")
       .describe(
-        "This is the email account to send emails from. This is specific to the email provider."
+        "This is the email account to send emails from. This is specific to the email provider.",
       ),
 
     pass: z

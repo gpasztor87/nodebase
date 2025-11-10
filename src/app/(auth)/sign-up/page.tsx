@@ -8,7 +8,7 @@ const SignUpPage = async () => {
   return (
     <AuthWrapper
       title="Create your account"
-      description="Welcome! Please fill in the details to get started."
+      description="Please fill in the details to get started."
       socialLogin={true}
     >
       <SignUpForm />

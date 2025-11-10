@@ -1,7 +1,8 @@
 "use client";
 
-import Link from "next/link";
 import { z } from "zod";
+import Link from "next/link";
+import { toast } from "sonner";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -13,14 +14,17 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { Field, FieldDescription, FieldGroup } from "@/components/ui/field";
 import { LoadingSwap } from "@/components/ui/loading-swap";
 import { PasswordInput } from "@/components/ui/password-input";
 import { useForm } from "react-hook-form";
 import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
-import { toast } from "sonner";
 
 const SignUpSchema = z.object({
+  name: z.string().min(1, {
+    message: "Name is required",
+  }),
   email: z.email({
     message: "Please enter a valid email address",
   }),
@@ -35,6 +39,7 @@ export function SignUpForm() {
   const form = useForm({
     resolver: zodResolver(SignUpSchema),
     defaultValues: {
+      name: "",
       email: "",
       password: "",
     },
@@ -43,7 +48,7 @@ export function SignUpForm() {
   const onSubmit = async (values: z.infer<typeof SignUpSchema>) => {
     await authClient.signUp.email(
       {
-        name: values.email,
+        name: values.name,
         email: values.email,
         password: values.password,
         callbackURL: "/",
@@ -66,7 +71,20 @@ export function SignUpForm() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
-        <div className="grid gap-6">
+        <FieldGroup>
+          <FormField
+            name="name"
+            control={form.control}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Full name</FormLabel>
+                <FormControl>
+                  <Input type="text" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
           <FormField
             name="email"
             control={form.control}
@@ -100,16 +118,18 @@ export function SignUpForm() {
               </FormItem>
             )}
           />
-          <Button type="submit" className="w-full" disabled={isSubmitting}>
-            <LoadingSwap isLoading={isSubmitting}>Sign up</LoadingSwap>
-          </Button>
-          <div className="text-center text-sm text-muted-foreground">
-            Already have an account?{" "}
-            <Link href="/sign-in" className="hover:underline">
-              Sign in
-            </Link>
-          </div>
-        </div>
+          <Field>
+            <Button type="submit" className="w-full" disabled={isSubmitting}>
+              <LoadingSwap isLoading={isSubmitting}>Sign up</LoadingSwap>
+            </Button>
+            <FieldDescription className="text-center">
+              Already have an account?{" "}
+              <Link href="/sign-in" className="underline underline-offset-4">
+                Sign in
+              </Link>
+            </FieldDescription>
+          </Field>
+        </FieldGroup>
       </form>
     </Form>
   );
