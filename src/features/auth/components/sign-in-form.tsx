@@ -56,13 +56,13 @@ export function SignInForm() {
         onError: (ctx) => {
           if (ctx.error.code === "EMAIL_NOT_VERIFIED") {
             router.push(
-              `/verify-email?email=${encodeURIComponent(values.email)}`
+              `/verify-email?email=${encodeURIComponent(values.email)}`,
             );
           }
 
           toast.error(ctx.error.message || "Failed to sign in");
         },
-      }
+      },
     );
   };
 

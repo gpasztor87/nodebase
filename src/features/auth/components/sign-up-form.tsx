@@ -57,13 +57,13 @@ export function SignUpForm() {
       {
         onSuccess: () => {
           router.push(
-            `/verify-email?email=${encodeURIComponent(values.email)}`
+            `/verify-email?email=${encodeURIComponent(values.email)}`,
           );
         },
         onError: (ctx) => {
           toast.error(ctx.error.message || "Failed to sign up");
         },
-      }
+      },
     );
   };
 

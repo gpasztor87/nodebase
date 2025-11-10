@@ -3,7 +3,6 @@
 import {
   ChevronsUpDownIcon,
   CircleUserRoundIcon,
-  CreditCardIcon,
   LogOutIcon,
   UserIcon,
 } from "lucide-react";
@@ -25,6 +24,7 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { authClient } from "@/lib/auth-client";
+import { ModeToggle } from "./theme-toggle";
 
 export function NavUser({
   user,
@@ -80,29 +80,27 @@ export function NavUser({
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
+              <ModeToggle />
               <DropdownMenuItem>
                 <CircleUserRoundIcon />
-                Account
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <CreditCardIcon />
-                Billing
-              </DropdownMenuItem>
-              <DropdownMenuItem
-                onClick={() =>
-                  authClient.signOut({
-                    fetchOptions: {
-                      onSuccess: () => {
-                        router.push("/sign-in");
-                      },
-                    },
-                  })
-                }
-              >
-                <LogOutIcon />
-                Log out
+                User Settings
               </DropdownMenuItem>
             </DropdownMenuGroup>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem
+              onClick={() =>
+                authClient.signOut({
+                  fetchOptions: {
+                    onSuccess: () => {
+                      router.push("/sign-in");
+                    },
+                  },
+                })
+              }
+            >
+              <LogOutIcon />
+              Log out
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </SidebarMenuItem>
