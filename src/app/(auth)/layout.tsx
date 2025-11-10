@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { config } from "@/config";
+import appConfig from "@/config/app.config";
 
 const AuthLayout = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -10,13 +10,8 @@ const AuthLayout = ({ children }: { children: React.ReactNode }) => {
           href="/"
           className="flex items-center gap-2 self-center font-medium"
         >
-          <Image
-            src="/logo.svg"
-            width={30}
-            height={30}
-            alt={config.site.name}
-          />
-          {config.site.name}
+          <Image src="/logo.svg" width={30} height={30} alt={appConfig.name} />
+          {appConfig.name}
         </Link>
         {children}
       </div>

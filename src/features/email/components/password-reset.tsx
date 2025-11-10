@@ -10,7 +10,7 @@ import {
   Tailwind,
   Text,
 } from "@react-email/components";
-import { config } from "@/config";
+import appConfig from "@/config/app.config";
 
 interface PasswordResetProps {
   email: string;
@@ -27,7 +27,7 @@ const PasswordReset = ({ email, resetLink }: PasswordResetProps) => {
           <Container className="mx-auto my-10 max-w-[465px] p-5">
             <Text className="mx-0 mb-8 mt-4 p-0 text-center text-2xl font-normal">
               <span className="font-bold tracking-tighter">
-                {config.site.name}
+                {appConfig.name}
               </span>
             </Text>
 
@@ -68,11 +68,11 @@ const PasswordReset = ({ email, resetLink }: PasswordResetProps) => {
               <Text className="text-xs">
                 © {new Date().getFullYear()}{" "}
                 <a
-                  href={config.site.siteUrl}
+                  href={appConfig.siteUrl}
                   className="text-gray-400 no-underline visited:text-gray-400 hover:text-gray-400"
                   target="_blank"
                 >
-                  {config.site.siteUrl.replace(/^https?:\/\//, "")}
+                  {appConfig.siteUrl.replace(/^https?:\/\//, "")}
                 </a>
               </Text>
               <Text className="text-xs">

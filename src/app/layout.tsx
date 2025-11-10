@@ -1,9 +1,9 @@
-import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { TRPCReactProvider } from "@/trpc/client";
 import { Toaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "@/components/providers/theme-provider";
-import { config } from "@/config";
+import { rootMetadata } from "@/lib/root-meta";
+import appConfig from "@/config/app.config";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -16,10 +16,7 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: config.site.name,
-  description: config.site.description,
-};
+export const metadata = rootMetadata;
 
 export default function RootLayout({
   children,
@@ -27,13 +24,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang={config.site.language} suppressHydrationWarning>
+    <html lang={appConfig.language} suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ThemeProvider
           attribute="class"
-          defaultTheme={config.site.theme}
+          defaultTheme={appConfig.theme}
           enableSystem
           disableTransitionOnChange
         >

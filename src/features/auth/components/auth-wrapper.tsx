@@ -8,11 +8,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import {
-  socialProviders,
-  supportedOAuthProviderDetails,
-  type SupportedOAuthProvider,
-} from "../lib/providers";
+import { supportedOAuthProviderDetails } from "../lib/providers";
+import authConfig from "@/config/auth.config";
 import { BetterAuthActionButton } from "./better-auth-action-button";
 import { authClient } from "@/lib/auth-client";
 
@@ -27,7 +24,10 @@ const AuthWrapper = ({
   socialLogin?: boolean;
   children: React.ReactNode;
 }) => {
-  const providers = Object.keys(socialProviders) as SupportedOAuthProvider[];
+  const providers = Object.keys(authConfig.socialProviders) as Array<
+    keyof typeof supportedOAuthProviderDetails
+  >;
+
   return (
     <div className="flex flex-col gap-6">
       <Card>

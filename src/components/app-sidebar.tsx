@@ -14,7 +14,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { config } from "@/config";
+import appConfig from "@/config/app.config";
 import { FolderOpenIcon, LogOutIcon } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
 
@@ -46,9 +46,9 @@ export function AppSidebar() {
                   src="/logo.svg"
                   width={30}
                   height={30}
-                  alt={config.site.name}
+                  alt={appConfig.name}
                 />
-                {config.site.name}
+                {appConfig.name}
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>

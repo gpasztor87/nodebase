@@ -1,0 +1,23 @@
+import type { Metadata } from "next";
+
+import appConfig from "@/config/app.config";
+
+/**
+ * @name rootMetadata
+ * @description Define the root metadata for the application.
+ */
+export const rootMetadata: Metadata = {
+  title: appConfig.name,
+  description: appConfig.description,
+  metadataBase: new URL(appConfig.siteUrl),
+  openGraph: {
+    url: appConfig.siteUrl,
+    siteName: appConfig.name,
+    description: appConfig.description,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: appConfig.name,
+    description: appConfig.description,
+  },
+};

@@ -1,17 +1,9 @@
 "use server";
 
 import { createTransport } from "nodemailer";
-import { config } from "@/config";
+import emailConfig from "@/config/email.config";
 
-const transporter = createTransport({
-  host: config.email.host,
-  secure: config.email.secure,
-  port: config.email.port,
-  auth: {
-    user: config.email.user,
-    pass: config.email.password,
-  },
-});
+const transporter = createTransport(emailConfig);
 
 interface EmailOptions {
   to: string;
@@ -20,12 +12,8 @@ interface EmailOptions {
 }
 
 export const sendEmail = async (emailOptions: EmailOptions) => {
-  if (!config.email.sender) {
-    return;
-  }
-
   const defaultOptions = {
-    from: config.email.sender,
+    from: emailConfig.from,
   };
 
   await transporter.sendMail({ ...defaultOptions, ...emailOptions });

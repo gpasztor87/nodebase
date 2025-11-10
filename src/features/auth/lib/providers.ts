@@ -1,19 +1,7 @@
 import * as React from "react";
 
-import {
-  type SocialProviders,
-  type SocialProviderList,
-} from "better-auth/social-providers";
+import { type SocialProviderList } from "better-auth/social-providers";
 import { DiscordIcon, GithubIcon, GoogleIcon } from "../components/oauth-icons";
-
-export type SupportedOAuthProvider = keyof SocialProviders;
-
-export const socialProviders: SocialProviders = {
-  github: {
-    clientId: process.env.GITHUB_CLIENT_ID as string,
-    clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
-  },
-};
 
 export const supportedOAuthProviderDetails: Partial<
   Record<
