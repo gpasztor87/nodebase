@@ -1,11 +1,8 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { FolderOpenIcon } from "lucide-react";
-import { useTRPC } from "@/trpc/client";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { FolderOpenIcon, GalleryVerticalEndIcon } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -20,6 +17,7 @@ import {
 } from "@/components/ui/sidebar";
 import appConfig from "@/config/app.config";
 import { NavUser } from "./nav-user";
+import { useCurrentUser } from "@/features/auth/hooks/useCurrentUser";
 
 const menuItems = [
   {
@@ -34,25 +32,21 @@ const menuItems = [
   },
 ];
 
-export function AppSidebar() {
-  const trpc = useTRPC();
+export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const pathname = usePathname();
 
-  const { data: user } = useSuspenseQuery(trpc.getCurrentUser.queryOptions());
+  const { data: user } = useCurrentUser();
 
   return (
-    <Sidebar collapsible="icon">
+    <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton asChild className="gap-x-4 h-10 px-4">
+            <SidebarMenuButton asChild size="lg">
               <Link href="/" prefetch>
-                <Image
-                  src="/logo.svg"
-                  width={30}
-                  height={30}
-                  alt={appConfig.name}
-                />
+                <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
+                  <GalleryVerticalEndIcon className="size-4" />
+                </div>
                 {appConfig.name}
               </Link>
             </SidebarMenuButton>

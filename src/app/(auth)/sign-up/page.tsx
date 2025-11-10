@@ -9,7 +9,6 @@ const SignUpPage = async () => {
     <AuthWrapper
       title="Create your account"
       description="Please fill in the details to get started."
-      socialLogin={true}
     >
       <SignUpForm />
     </AuthWrapper>

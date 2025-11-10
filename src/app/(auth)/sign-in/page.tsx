@@ -9,7 +9,6 @@ const SignInPage = async () => {
     <AuthWrapper
       title="Sign in"
       description="Welcome back! Please sign in to continue"
-      socialLogin={true}
     >
       <SignInForm />
     </AuthWrapper>

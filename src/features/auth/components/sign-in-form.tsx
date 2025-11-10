@@ -20,6 +20,7 @@ import { PasswordInput } from "@/components/ui/password-input";
 import { LoadingSwap } from "@/components/ui/loading-swap";
 import { useForm } from "react-hook-form";
 import { authClient } from "@/lib/auth-client";
+import SocialLogins from "./social-logins";
 
 const SignInSchema = z.object({
   email: z.email({
@@ -55,13 +56,13 @@ export function SignInForm() {
         onError: (ctx) => {
           if (ctx.error.code === "EMAIL_NOT_VERIFIED") {
             router.push(
-              `/verify-email?email=${encodeURIComponent(values.email)}`,
+              `/verify-email?email=${encodeURIComponent(values.email)}`
             );
           }
 
           toast.error(ctx.error.message || "Failed to sign in");
         },
-      },
+      }
     );
   };
 
@@ -71,15 +72,15 @@ export function SignInForm() {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <FieldGroup>
+          <SocialLogins isSubmitting={isSubmitting} />
           <FormField
             name="email"
             control={form.control}
             render={({ field }) => (
               <FormItem>
-                <FormLabel htmlFor="email">Email address</FormLabel>
+                <FormLabel>Email address</FormLabel>
                 <FormControl>
                   <Input
-                    id="email"
                     type="email"
                     autoComplete="email webauthn"
                     {...field}

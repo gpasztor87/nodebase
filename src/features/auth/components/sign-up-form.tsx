@@ -20,6 +20,7 @@ import { PasswordInput } from "@/components/ui/password-input";
 import { useForm } from "react-hook-form";
 import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
+import SocialLogins from "./social-logins";
 
 const SignUpSchema = z.object({
   name: z.string().min(1, {
@@ -72,6 +73,7 @@ export function SignUpForm() {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <FieldGroup>
+          <SocialLogins isSubmitting={isSubmitting} />
           <FormField
             name="name"
             control={form.control}

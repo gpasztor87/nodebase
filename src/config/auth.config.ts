@@ -5,6 +5,14 @@ import { VerificationEmail } from "@/features/email/lib/verification";
 
 const authConfig = {
   /**
+   * The name of the application
+   *
+   * process.env.APP_NAME
+   *
+   * @default "Better Auth"
+   */
+  appName: "Nodebase",
+  /**
    * Session configuration
    */
   session: {

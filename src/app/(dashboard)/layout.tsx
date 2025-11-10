@@ -1,19 +1,21 @@
-import { getQueryClient, trpc } from "@/trpc/server";
-import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
+import { getQueryClient, HydrateClient, trpc } from "@/trpc/server";
 
 import { AppSidebar } from "@/components/app-sidebar";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
+import { requireAuth } from "@/features/auth/lib/utils";
 
-const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
+const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
+  await requireAuth();
+
   const queryClient = getQueryClient();
 
   void queryClient.prefetchQuery(trpc.getCurrentUser.queryOptions());
 
   return (
     <SidebarProvider>
-      <HydrationBoundary state={dehydrate(queryClient)}>
+      <HydrateClient>
         <AppSidebar />
-      </HydrationBoundary>
+      </HydrateClient>
       <SidebarInset className="bg-accent/20">{children}</SidebarInset>
     </SidebarProvider>
   );
