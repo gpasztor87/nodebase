@@ -1,6 +1,7 @@
 "use server";
 
 import { createTransport } from "nodemailer";
+
 import emailConfig from "@/config/email.config";
 
 const transporter = createTransport(emailConfig);

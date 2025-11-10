@@ -1,6 +1,7 @@
 import * as React from "react";
 
 import { type SocialProviderList } from "better-auth/social-providers";
+
 import { DiscordIcon, GithubIcon, GoogleIcon } from "../components/oauth-icons";
 
 export const supportedOAuthProviderDetails: Partial<

@@ -1,10 +1,13 @@
 "use client";
 
+import { type ComponentProps, useState } from "react";
+
+import { EyeIcon, EyeOffIcon } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+
 import { cn } from "@/lib/utils";
-import { EyeIcon, EyeOffIcon } from "lucide-react";
-import { useState, type ComponentProps } from "react";
 
 export function PasswordInput({
   className,

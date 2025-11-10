@@ -1,10 +1,12 @@
 "use client";
 
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
+
 import { Button } from "@/components/ui/button";
+
 import AuthWrapper from "@/features/auth/components/auth-wrapper";
 import { ResetPasswordForm } from "@/features/auth/components/reset-password-form";
-import { useSearchParams } from "next/navigation";
 
 const ResetPasswordPage = () => {
   const searchParams = useSearchParams();

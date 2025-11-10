@@ -1,8 +1,11 @@
 "use client";
 
 import authConfig from "@/config/auth.config";
+
 import { Field, FieldSeparator } from "@/components/ui/field";
+
 import { authClient } from "@/lib/auth-client";
+
 import { supportedOAuthProviderDetails } from "../lib/providers";
 import { BetterAuthActionButton } from "./better-auth-action-button";
 

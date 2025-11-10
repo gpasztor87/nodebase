@@ -1,9 +1,12 @@
 "use client";
 
+import { useSearchParams } from "next/navigation";
+
 import { useEffect, useRef, useState } from "react";
+
 import AuthWrapper from "@/features/auth/components/auth-wrapper";
 import { BetterAuthActionButton } from "@/features/auth/components/better-auth-action-button";
-import { useSearchParams } from "next/navigation";
+
 import { authClient } from "@/lib/auth-client";
 
 const VerifyEmailPage = () => {

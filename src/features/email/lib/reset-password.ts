@@ -1,8 +1,9 @@
 "use server";
 
 import { render } from "@react-email/components";
-import { sendEmail } from "./send-email";
+
 import PasswordReset from "../components/password-reset";
+import { sendEmail } from "./send-email";
 
 export async function ResetPasswordEmail({
   user,

@@ -1,12 +1,14 @@
 "use client";
 
-import { z } from "zod";
 import Link from "next/link";
-import { toast } from "sonner";
-import { useForm } from "react-hook-form";
+
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import { z } from "zod";
+
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Field, FieldDescription, FieldGroup } from "@/components/ui/field";
 import {
   Form,
   FormControl,
@@ -15,9 +17,10 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { authClient } from "@/lib/auth-client";
+import { Input } from "@/components/ui/input";
 import { LoadingSwap } from "@/components/ui/loading-swap";
-import { Field, FieldDescription, FieldGroup } from "@/components/ui/field";
+
+import { authClient } from "@/lib/auth-client";
 
 const ForgotPasswordSchema = z.object({
   email: z.email({

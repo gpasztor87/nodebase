@@ -1,7 +1,10 @@
-import { auth } from "@/lib/auth";
-import { initTRPC, TRPCError } from "@trpc/server";
 import { headers } from "next/headers";
+
 import { cache } from "react";
+
+import { TRPCError, initTRPC } from "@trpc/server";
+
+import { auth } from "@/lib/auth";
 
 export const createTRPCContext = cache(async () => {
   /**

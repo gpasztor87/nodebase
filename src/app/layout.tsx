@@ -1,9 +1,14 @@
 import { Geist, Geist_Mono } from "next/font/google";
+
 import { TRPCReactProvider } from "@/trpc/client";
-import { Toaster } from "@/components/ui/sonner";
-import { ThemeProvider } from "@/components/providers/theme-provider";
-import { rootMetadata } from "@/lib/root-meta";
+
 import appConfig from "@/config/app.config";
+
+import { ThemeProvider } from "@/components/providers/theme-provider";
+import { Toaster } from "@/components/ui/sonner";
+
+import { rootMetadata } from "@/lib/root-meta";
+
 import "./globals.css";
 
 const geistSans = Geist({

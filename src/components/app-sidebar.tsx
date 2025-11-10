@@ -2,7 +2,11 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+
 import { FolderOpenIcon, GalleryVerticalEndIcon } from "lucide-react";
+
+import appConfig from "@/config/app.config";
+
 import {
   Sidebar,
   SidebarContent,
@@ -15,9 +19,10 @@ import {
   SidebarMenuItem,
   SidebarRail,
 } from "@/components/ui/sidebar";
-import appConfig from "@/config/app.config";
-import { NavUser } from "./nav-user";
+
 import { useCurrentUser } from "@/features/auth/hooks/useCurrentUser";
+
+import { NavUser } from "./nav-user";
 
 const menuItems = [
   {

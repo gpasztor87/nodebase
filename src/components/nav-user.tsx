@@ -1,13 +1,15 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+
 import {
   ChevronsUpDownIcon,
   CircleUserRoundIcon,
   LogOutIcon,
   UserIcon,
 } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -23,7 +25,9 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
+
 import { authClient } from "@/lib/auth-client";
+
 import { ModeToggle } from "./theme-toggle";
 
 export function NavUser({

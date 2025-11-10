@@ -1,8 +1,9 @@
 "use server";
 
 import { render } from "@react-email/components";
-import { sendEmail } from "./send-email";
+
 import EmailVerification from "../components/email-verification";
+import { sendEmail } from "./send-email";
 
 export async function VerificationEmail({
   user,

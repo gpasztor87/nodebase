@@ -1,6 +1,8 @@
 import Link from "next/link";
-import appConfig from "@/config/app.config";
+
 import { GalleryVerticalEndIcon } from "lucide-react";
+
+import appConfig from "@/config/app.config";
 
 const AuthLayout = ({ children }: { children: React.ReactNode }) => {
   return (
