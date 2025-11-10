@@ -1,5 +1,25 @@
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbList,
+  BreadcrumbPage,
+} from "@/components/ui/breadcrumb";
+import { AppHeader } from "@/components/app-header";
+
 const Page = async () => {
-  return <h2>Workflows</h2>;
+  return (
+    <>
+      <AppHeader>
+        <Breadcrumb>
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbPage>Workflows</BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
+      </AppHeader>
+    </>
+  );
 };
 
 export default Page;
