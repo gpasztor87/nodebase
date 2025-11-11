@@ -17,9 +17,9 @@ export const useSuspenseWorkflows = () => {
 };
 
 export const useCreateWorkflow = () => {
-  const queryClient = useQueryClient();
-
   const trpc = useTRPC();
+
+  const queryClient = useQueryClient();
 
   return useMutation(
     trpc.workflows.create.mutationOptions({
@@ -29,6 +29,27 @@ export const useCreateWorkflow = () => {
       },
       onError: (error) => {
         toast.error(`Failed to create workflow: ${error.message}`);
+      },
+    }),
+  );
+};
+
+export const useRemoveWorkflow = () => {
+  const trpc = useTRPC();
+
+  const queryClient = useQueryClient();
+
+  return useMutation(
+    trpc.workflows.remove.mutationOptions({
+      onSuccess: (data) => {
+        toast.success(`Workflow ${data.name} removed`);
+        queryClient.invalidateQueries(trpc.workflows.list.queryOptions({}));
+        queryClient.invalidateQueries(
+          trpc.workflows.get.queryFilter({ id: data.id }),
+        );
+      },
+      onError: (error) => {
+        toast.error(`Failed to remove workflow: ${error.message}`);
       },
     }),
   );
