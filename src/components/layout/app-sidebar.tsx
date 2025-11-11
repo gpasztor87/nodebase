@@ -31,7 +31,7 @@ const menuItems = [
       {
         title: "Workflows",
         icon: FolderOpenIcon,
-        url: "/",
+        url: "/workflows",
       },
     ],
   },

@@ -1,38 +1,8 @@
-import { Suspense } from "react";
+import { requireAuth } from "@/features/auth/lib/utils";
 
-import { type SearchParams } from "nuqs/server";
-import { ErrorBoundary } from "react-error-boundary";
+const DashboardPage = async () => {
+  await requireAuth();
 
-import {
-  WorkflowsContainer,
-  WorkflowsError,
-  WorkflowsList,
-  WorkflowsLoading,
-} from "@/features/workflows/components/workflows";
-import { workflowsParamsLoader } from "@/features/workflows/server/loader";
-import { prefetchWorkflows } from "@/features/workflows/server/prefetch";
-
-import { HydrateClient } from "@/trpc/server";
-
-type Props = {
-  searchParams: Promise<SearchParams>;
+  return;
 };
-
-const Page = async ({ searchParams }: Props) => {
-  const params = await workflowsParamsLoader(searchParams);
-  prefetchWorkflows(params);
-
-  return (
-    <WorkflowsContainer>
-      <HydrateClient>
-        <ErrorBoundary fallback={<WorkflowsError />}>
-          <Suspense fallback={<WorkflowsLoading />}>
-            <WorkflowsList />
-          </Suspense>
-        </ErrorBoundary>
-      </HydrateClient>
-    </WorkflowsContainer>
-  );
-};
-
-export default Page;
+export default DashboardPage;
