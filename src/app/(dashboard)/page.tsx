@@ -1,24 +1,35 @@
-import { AppHeader } from "@/components/layout/app-header";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbList,
-  BreadcrumbPage,
-} from "@/components/ui/breadcrumb";
+import { Suspense } from "react";
 
-const Page = async () => {
+import { type SearchParams } from "nuqs/server";
+import { ErrorBoundary } from "react-error-boundary";
+
+import {
+  WorkflowsContainer,
+  WorkflowsList,
+} from "@/features/workflows/components/workflows";
+import { workflowsParamsLoader } from "@/features/workflows/server/loader";
+import { prefetchWorkflows } from "@/features/workflows/server/prefetch";
+
+import { HydrateClient } from "@/trpc/server";
+
+type Props = {
+  searchParams: Promise<SearchParams>;
+};
+
+const Page = async ({ searchParams }: Props) => {
+  const params = await workflowsParamsLoader(searchParams);
+  prefetchWorkflows(params);
+
   return (
-    <>
-      <AppHeader>
-        <Breadcrumb>
-          <BreadcrumbList>
-            <BreadcrumbItem>
-              <BreadcrumbPage>Workflows</BreadcrumbPage>
-            </BreadcrumbItem>
-          </BreadcrumbList>
-        </Breadcrumb>
-      </AppHeader>
-    </>
+    <WorkflowsContainer>
+      <HydrateClient>
+        <ErrorBoundary fallback={<>Loading...</>}>
+          <Suspense>
+            <WorkflowsList />
+          </Suspense>
+        </ErrorBoundary>
+      </HydrateClient>
+    </WorkflowsContainer>
   );
 };
 

@@ -1,9 +1,9 @@
-import { createTRPCRouter, protectedProcedure } from "../init";
+import { workflowsRouter } from "@/features/workflows/server/routers";
+
+import { createTRPCRouter } from "../init";
 
 export const appRouter = createTRPCRouter({
-  getCurrentUser: protectedProcedure.query(({ ctx }) => {
-    return ctx.auth.user;
-  }),
+  workflows: workflowsRouter,
 });
 
 // export type definition of API

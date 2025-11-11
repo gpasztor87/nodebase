@@ -1,3 +1,4 @@
+import { AppHeader } from "@/components/layout/app-header";
 import { AppSidebar } from "@/components/layout/app-sidebar";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 
@@ -9,7 +10,10 @@ const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
   return (
     <SidebarProvider>
       <AppSidebar />
-      <SidebarInset className="bg-accent/20">{children}</SidebarInset>
+      <SidebarInset className="bg-accent/20">
+        <AppHeader />
+        {children}
+      </SidebarInset>
     </SidebarProvider>
   );
 };
