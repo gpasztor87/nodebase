@@ -1,0 +1,22 @@
+"use client";
+
+import * as React from "react";
+
+import { PlusIcon } from "lucide-react";
+
+import { Button } from "@/components/ui/button";
+
+export const AddNodeButton = React.memo(() => {
+  return (
+    <Button
+      size="icon"
+      variant="outline"
+      className="bg-background"
+      onClick={() => {}}
+    >
+      <PlusIcon />
+    </Button>
+  );
+});
+
+AddNodeButton.displayName = "AddNodeButton";

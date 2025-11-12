@@ -2,7 +2,6 @@
 
 import { useRouter } from "next/navigation";
 
-import { type Workflow } from "@/generated/prisma/client";
 import { formatDistanceToNow } from "date-fns";
 import { WorkflowIcon } from "lucide-react";
 
@@ -17,6 +16,8 @@ import {
   ErrorView,
   LoadingView,
 } from "@/components/entity-components";
+
+import { type Workflow } from "@/generated/prisma/client";
 
 import { useEntitySearch } from "@/hooks/use-entity-search";
 

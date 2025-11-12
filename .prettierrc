@@ -10,6 +10,7 @@
     "<THIRD_PARTY_MODULES>",
     "^@/config/(.*)$",
     "^@/components/(.*)$",
+    "^@/generated/(.*)$",
     "^@/features/(.*)$",
     "^@/hooks/(.*)$",
     "^@/lib/(.*)$",
