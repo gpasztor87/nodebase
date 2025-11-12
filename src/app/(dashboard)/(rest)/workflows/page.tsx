@@ -15,11 +15,11 @@ import { prefetchWorkflows } from "@/features/workflows/server/prefetch";
 
 import { HydrateClient } from "@/trpc/server";
 
-type Props = {
+type PageProps = {
   searchParams: Promise<SearchParams>;
 };
 
-const WorkflowsPage = async ({ searchParams }: Props) => {
+const Page = async ({ searchParams }: PageProps) => {
   await requireAuth();
 
   const params = await workflowsParamsLoader(searchParams);
@@ -38,4 +38,4 @@ const WorkflowsPage = async ({ searchParams }: Props) => {
   );
 };
 
-export default WorkflowsPage;
+export default Page;

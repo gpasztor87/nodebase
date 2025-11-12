@@ -116,10 +116,14 @@ export const WorkflowsError = () => {
 };
 
 export const WorkflowsEmpty = () => {
+  const router = useRouter();
   const createWorkflow = useCreateWorkflow();
 
   const handleCreate = () => {
     createWorkflow.mutate(undefined, {
+      onSuccess: (data) => {
+        router.push(`/workflows/${data.id}`);
+      },
       onError: (error) => {
         console.error(error);
       },
@@ -143,7 +147,7 @@ export const WorkflowItem = ({ data }: { data: Workflow }) => {
 
   return (
     <EntityItem
-      href="/"
+      href={`/workflows/${data.id}`}
       title={data.name}
       subtitle={
         <>

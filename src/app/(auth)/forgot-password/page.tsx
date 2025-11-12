@@ -2,7 +2,7 @@ import AuthWrapper from "@/features/auth/components/auth-wrapper";
 import { ForgotPasswordForm } from "@/features/auth/components/forgot-password-form";
 import { requireUnauth } from "@/features/auth/lib/utils";
 
-const ForgotPasswordPage = async () => {
+const Page = async () => {
   await requireUnauth();
 
   return (
@@ -15,4 +15,4 @@ const ForgotPasswordPage = async () => {
   );
 };
 
-export default ForgotPasswordPage;
+export default Page;

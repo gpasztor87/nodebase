@@ -2,7 +2,7 @@ import AuthWrapper from "@/features/auth/components/auth-wrapper";
 import { SignUpForm } from "@/features/auth/components/sign-up-form";
 import { requireUnauth } from "@/features/auth/lib/utils";
 
-const SignUpPage = async () => {
+const Page = async () => {
   await requireUnauth();
 
   return (
@@ -15,4 +15,4 @@ const SignUpPage = async () => {
   );
 };
 
-export default SignUpPage;
+export default Page;

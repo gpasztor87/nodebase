@@ -9,7 +9,7 @@ import { BetterAuthActionButton } from "@/features/auth/components/better-auth-a
 
 import { authClient } from "@/lib/auth-client";
 
-const VerifyEmailPage = () => {
+const Page = () => {
   const searchParams = useSearchParams();
   const email = decodeURIComponent(searchParams.get("email") as string);
 
@@ -66,4 +66,4 @@ const VerifyEmailPage = () => {
   );
 };
 
-export default VerifyEmailPage;
+export default Page;

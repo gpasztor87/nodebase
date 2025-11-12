@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import AuthWrapper from "@/features/auth/components/auth-wrapper";
 import { ResetPasswordForm } from "@/features/auth/components/reset-password-form";
 
-const ResetPasswordPage = () => {
+const Page = () => {
   const searchParams = useSearchParams();
   const token = searchParams.get("token");
   const error = searchParams.get("error");
@@ -36,4 +36,4 @@ const ResetPasswordPage = () => {
   );
 };
 
-export default ResetPasswordPage;
+export default Page;
