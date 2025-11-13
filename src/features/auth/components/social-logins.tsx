@@ -44,7 +44,9 @@ const SocialLogins = ({ isSubmitting }: { isSubmitting: boolean }) => {
               );
             })}
           </Field>
-          <FieldSeparator>or</FieldSeparator>
+          <FieldSeparator className="*:data-[slot=field-separator-content]:bg-card">
+            or
+          </FieldSeparator>
         </>
       )}
     </>

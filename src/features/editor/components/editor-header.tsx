@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 
 import { SaveIcon } from "lucide-react";
 
+import { AppHeader } from "@/components/layout/app-header";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -15,7 +16,6 @@ import {
 } from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { SidebarTrigger } from "@/components/ui/sidebar";
 
 import {
   useSuspenseWorkflow,
@@ -127,12 +127,11 @@ export const EditorBreadcrumbs = ({ workflowId }: { workflowId: string }) => {
 
 export const EditorHeader = ({ workflowId }: { workflowId: string }) => {
   return (
-    <header className="flex h-14 shrink-0 items-center gap-2 border-b px-4">
-      <SidebarTrigger />
+    <AppHeader>
       <div className="flex flex-row items-center justify-between gap-x-4 w-full">
         <EditorBreadcrumbs workflowId={workflowId} />
         <EditorSaveButton workflowId={workflowId} />
       </div>
-    </header>
+    </AppHeader>
   );
 };
