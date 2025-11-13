@@ -1,0 +1,71 @@
+import { NonRetriableError } from "inngest";
+import ky, { type Options as KyOptions } from "ky";
+
+import { NodeExecutor } from "@/features/executions/types";
+
+type HttpRequestData = {
+  variableName: string;
+  endpoint: string;
+  method: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
+  body?: string;
+};
+
+export const httpRequestExecutor: NodeExecutor<HttpRequestData> = async ({
+  data,
+  context,
+  step,
+}) => {
+  // TODO: Publist "loading" state for http request
+
+  if (!data.endpoint) {
+    // TODO: Publist "error" state for http request
+    throw new NonRetriableError("Http Request node: No endpoint configured.");
+  }
+
+  if (!data.variableName) {
+    // TODO: Publist "error" state for http request
+    throw new NonRetriableError(
+      "Http Request node: Variable name not configured.",
+    );
+  }
+
+  if (!data.method) {
+    // TODO: Publist "error" state for http request
+    throw new NonRetriableError("Http Request node: Method not configured.");
+  }
+
+  const result = await step.run("http-request", async () => {
+    const endpoint = data.endpoint;
+    const method = data.method;
+
+    const options: KyOptions = { method };
+
+    if (["POST", "PATCH", "PUT"].includes(method)) {
+      options.body = data.body;
+      options.headers = {
+        "Content-Type": "application/json",
+      };
+    }
+
+    const response = await ky(endpoint, options);
+    const contentType = response.headers.get("content-type");
+    const responseData = contentType?.includes("application/json")
+      ? await response.json()
+      : await response.text();
+
+    return {
+      ...context,
+      [data.variableName]: {
+        httpResponse: {
+          status: response.status,
+          statusText: response.statusText,
+          data: responseData,
+        },
+      },
+    };
+  });
+
+  // TODO: Publist "success" state for http request
+
+  return result;
+};
