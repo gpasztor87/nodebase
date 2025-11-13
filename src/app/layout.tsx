@@ -1,5 +1,6 @@
 import { Geist, Geist_Mono } from "next/font/google";
 
+import { Provider } from "jotai";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 
 import appConfig from "@/config/app.config";
@@ -42,8 +43,10 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <TRPCReactProvider>
-            <NuqsAdapter>{children}</NuqsAdapter>
-            <Toaster />
+            <Provider>
+              <NuqsAdapter>{children}</NuqsAdapter>
+              <Toaster />
+            </Provider>
           </TRPCReactProvider>
         </ThemeProvider>
       </body>

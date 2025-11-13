@@ -5,7 +5,7 @@ import { InitialNode } from "@/components/initial-node";
 import { NodeType } from "@/generated/prisma/enums";
 
 import { HttpRequestNode } from "@/features/executions/components/http-request/node";
-import { ManualTriggerNode } from "@/features/triggers/manual-trigger/node";
+import { ManualTriggerNode } from "@/features/triggers/components/manual-trigger/node";
 
 export const nodeComponents = {
   [NodeType.INITIAL]: InitialNode,

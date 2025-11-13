@@ -6,6 +6,7 @@ import { type Node, type NodeProps } from "@xyflow/react";
 import { GlobeIcon } from "lucide-react";
 
 import { BaseExecutionNode } from "../base-execution-node";
+import { HttpRequestDialog } from "./dialog";
 
 type HttpRequestNodeData = {
   endpoint?: string;
@@ -18,21 +19,37 @@ type HttpRequestNodeType = Node<HttpRequestNodeData>;
 
 export const HttpRequestNode = React.memo(
   (props: NodeProps<HttpRequestNodeType>) => {
-    const nodeData = props.data as HttpRequestNodeData;
+    const [dialogOpen, setDialogOpen] = React.useState(false);
+
+    const nodeStatus = "initial";
+
+    const nodeData = props.data;
     const description = nodeData.endpoint
       ? `${nodeData.method || "DELETE"}: ${nodeData.endpoint}`
       : "Not configured";
 
+    const handleOpenSettings = () => setDialogOpen(true);
+
     return (
       <>
+        <HttpRequestDialog
+          open={dialogOpen}
+          onOpenChange={setDialogOpen}
+          onSubmit={() => {}}
+          // TODO  initialValues for all of these
+          defaultEndpoint={nodeData.endpoint}
+          defaultMethod={nodeData.method}
+          defaultBody={nodeData.body}
+        />
         <BaseExecutionNode
           {...props}
           id={props.id}
           name="HTTP Request"
           description={description}
           icon={GlobeIcon}
-          onSettings={() => {}}
-          onDoubleClick={() => {}}
+          status={nodeStatus}
+          onSettings={handleOpenSettings}
+          onDoubleClick={handleOpenSettings}
         />
       </>
     );

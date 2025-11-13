@@ -40,27 +40,6 @@ export const useCreateWorkflow = () => {
   );
 };
 
-export const useUpdateWorkflow = () => {
-  const trpc = useTRPC();
-
-  const queryClient = useQueryClient();
-
-  return useMutation(
-    trpc.workflows.update.mutationOptions({
-      onSuccess: (data) => {
-        toast.success(`Workflow ${data.name} updated`);
-        queryClient.invalidateQueries(trpc.workflows.list.queryOptions({}));
-        queryClient.invalidateQueries(
-          trpc.workflows.get.queryFilter({ id: data.id }),
-        );
-      },
-      onError: (error) => {
-        toast.error(`Failed to update workflow: ${error.message}`);
-      },
-    }),
-  );
-};
-
 export const useRemoveWorkflow = () => {
   const trpc = useTRPC();
 
@@ -77,6 +56,48 @@ export const useRemoveWorkflow = () => {
       },
       onError: (error) => {
         toast.error(`Failed to remove workflow: ${error.message}`);
+      },
+    }),
+  );
+};
+
+export const useUpdateWorkflowName = () => {
+  const trpc = useTRPC();
+
+  const queryClient = useQueryClient();
+
+  return useMutation(
+    trpc.workflows.updateName.mutationOptions({
+      onSuccess: (data) => {
+        toast.success(`Workflow ${data.name} updated`);
+        queryClient.invalidateQueries(trpc.workflows.list.queryOptions({}));
+        queryClient.invalidateQueries(
+          trpc.workflows.get.queryFilter({ id: data.id }),
+        );
+      },
+      onError: (error) => {
+        toast.error(`Failed to update workflow: ${error.message}`);
+      },
+    }),
+  );
+};
+
+export const useUpdateWorkflow = () => {
+  const trpc = useTRPC();
+
+  const queryClient = useQueryClient();
+
+  return useMutation(
+    trpc.workflows.update.mutationOptions({
+      onSuccess: (data) => {
+        toast.success(`Workflow ${data.name} saved`);
+        queryClient.invalidateQueries(trpc.workflows.list.queryOptions({}));
+        queryClient.invalidateQueries(
+          trpc.workflows.get.queryFilter({ id: data.id }),
+        );
+      },
+      onError: (error) => {
+        toast.error(`Failed to save workflow: ${error.message}`);
       },
     }),
   );
