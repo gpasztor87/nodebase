@@ -1,6 +1,6 @@
 import { NonRetriableError } from "inngest";
 
-import { getExecutor } from "@/features/executions/lib/executor-registry";
+import { getExecutor } from "@/features/nodes/lib/executor-registry";
 
 import prisma from "@/lib/db";
 

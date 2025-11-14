@@ -1,4 +1,4 @@
-import { NodeExecutor } from "@/features/executions/types";
+import { type NodeExecutor } from "@/features/nodes/types";
 
 import { manualTriggerChannel } from "@/inngest/channels/manual-trigger";
 

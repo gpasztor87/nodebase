@@ -3,7 +3,7 @@ import * as React from "react";
 import { type NodeProps } from "@xyflow/react";
 import { MousePointerIcon } from "lucide-react";
 
-import { useNodeStatus } from "@/features/executions/hooks/use-node-status";
+import { useNodeStatus } from "@/features/nodes/hooks/use-node-status";
 
 import { ManualTriggerChannelName } from "@/inngest/channels/manual-trigger";
 

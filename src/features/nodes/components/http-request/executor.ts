@@ -1,7 +1,7 @@
 import { NonRetriableError } from "inngest";
 import ky, { type Options as KyOptions } from "ky";
 
-import { NodeExecutor } from "@/features/executions/types";
+import { type NodeExecutor } from "@/features/nodes/types";
 
 import { httpRequestChannel } from "@/inngest/channels/http-request";
 
