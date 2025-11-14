@@ -2,14 +2,16 @@
 
 import { useSearchParams } from "next/navigation";
 
-import { useEffect, useRef, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
+
+import { Loader2Icon } from "lucide-react";
 
 import AuthWrapper from "@/features/auth/components/auth-wrapper";
 import { BetterAuthActionButton } from "@/features/auth/components/better-auth-action-button";
 
 import { authClient } from "@/lib/auth-client";
 
-const Page = () => {
+const VerifyEmail = () => {
   const searchParams = useSearchParams();
   const email = decodeURIComponent(searchParams.get("email") as string);
 
@@ -63,6 +65,20 @@ const Page = () => {
           : "Resend Email"}
       </BetterAuthActionButton>
     </AuthWrapper>
+  );
+};
+
+const Page = () => {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex justifx-center items-center flex-1 flex-col gap-y-4">
+          <Loader2Icon className="size-5 animate-spin" />
+        </div>
+      }
+    >
+      <VerifyEmail />
+    </Suspense>
   );
 };
 

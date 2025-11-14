@@ -3,12 +3,16 @@
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 
+import { Suspense } from "react";
+
+import { Loader2Icon } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
 
 import AuthWrapper from "@/features/auth/components/auth-wrapper";
 import { ResetPasswordForm } from "@/features/auth/components/reset-password-form";
 
-const Page = () => {
+const ResetPassword = () => {
   const searchParams = useSearchParams();
   const token = searchParams.get("token");
   const error = searchParams.get("error");
@@ -33,6 +37,20 @@ const Page = () => {
     >
       <ResetPasswordForm token={token} />
     </AuthWrapper>
+  );
+};
+
+const Page = () => {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex justifx-center items-center flex-1 flex-col gap-y-4">
+          <Loader2Icon className="size-5 animate-spin" />
+        </div>
+      }
+    >
+      <ResetPassword />
+    </Suspense>
   );
 };
 
