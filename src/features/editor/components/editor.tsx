@@ -5,7 +5,6 @@ import { useCallback, useMemo, useState } from "react";
 import {
   Background,
   type Connection,
-  Controls,
   type Edge,
   type EdgeChange,
   type Node,
@@ -22,6 +21,7 @@ import { useSetAtom } from "jotai";
 import { nodeComponents } from "@/config/node-components";
 
 import { ErrorView, LoadingView } from "@/components/entity-components";
+import { ZoomSlider } from "@/components/zoom-slider";
 
 import { NodeType } from "@/generated/prisma/enums";
 
@@ -84,7 +84,7 @@ export const Editor = ({ workflowId }: { workflowId: string }) => {
         snapToGrid
       >
         <Background />
-        <Controls />
+        <ZoomSlider orientation="vertical" position="bottom-left" />
         <Panel position="top-right">
           <AddNodeButton />
         </Panel>
