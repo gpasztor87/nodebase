@@ -5,13 +5,17 @@ import * as React from "react";
 import { type Node, type NodeProps, useReactFlow } from "@xyflow/react";
 import { GlobeIcon } from "lucide-react";
 
+import { HttpRequestChannelName } from "@/inngest/channels/http-request";
+
+import { useNodeStatus } from "../../hooks/use-node-status";
 import { BaseExecutionNode } from "../base-execution-node";
+import { fetchHttpRequestRealtimeToken } from "./actions";
 import { HttpRequestDialog, type HttpRequestFormValues } from "./dialog";
 
 type HttpRequestNodeData = {
   variableName?: string;
   endpoint?: string;
-  method: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
+  method?: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
   body?: string;
 };
 
@@ -23,7 +27,12 @@ export const HttpRequestNode = React.memo(
 
     const { setNodes } = useReactFlow();
 
-    const nodeStatus = "initial";
+    const nodeStatus = useNodeStatus({
+      nodeId: props.id,
+      channel: HttpRequestChannelName,
+      topic: "status",
+      refreshToken: fetchHttpRequestRealtimeToken,
+    });
 
     const nodeData = props.data;
     const description = nodeData.endpoint
