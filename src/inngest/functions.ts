@@ -1,5 +1,7 @@
 import { NonRetriableError } from "inngest";
 
+import { ExecutionStatus } from "@/generated/prisma/enums";
+
 import { getExecutor } from "@/features/nodes/lib/executor-registry";
 
 import prisma from "@/lib/db";
@@ -12,17 +14,38 @@ import { topologicalSort } from "./utils";
 export const executeWorkflow = inngest.createFunction(
   {
     id: "execute-workflow",
+    onFailure: async ({ event }) => {
+      return prisma.execution.update({
+        where: { inngestEventId: event.data.event.id },
+        data: {
+          status: ExecutionStatus.FAILED,
+          error: event.data.error.message,
+          errorStack: event.data.error.stack,
+          completedAt: new Date(),
+        },
+      });
+    },
   },
   {
     event: "workflows/execute.workflow",
     channels: [httpRequestChannel(), manualTriggerChannel()],
   },
   async ({ event, step, publish }) => {
+    const inngestEventId = event.id;
     const workflowId = event.data.workflowId;
 
-    if (!workflowId) {
-      throw new NonRetriableError("WorkflowId is missing.");
+    if (!inngestEventId || !workflowId) {
+      throw new NonRetriableError("Inngest Id or WorkflowId is missing.");
     }
+
+    await step.run("create-execution", async () => {
+      return prisma.execution.create({
+        data: {
+          workflowId,
+          inngestEventId,
+        },
+      });
+    });
 
     const sortedNodes = await step.run("prepare-workflow", async () => {
       const workflow = await prisma.workflow.findUnique({
@@ -52,6 +75,17 @@ export const executeWorkflow = inngest.createFunction(
         publish,
       });
     }
+
+    await step.run("update-execution", async () => {
+      return prisma.execution.update({
+        where: { inngestEventId, workflowId },
+        data: {
+          status: ExecutionStatus.SUCCESS,
+          completedAt: new Date(),
+          output: context,
+        },
+      });
+    });
 
     return { workflowId, result: context };
   },

@@ -3,7 +3,11 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import { FolderOpenIcon, GalleryVerticalEndIcon } from "lucide-react";
+import {
+  FolderOpenIcon,
+  GalleryVerticalEndIcon,
+  HistoryIcon,
+} from "lucide-react";
 
 import appConfig from "@/config/app.config";
 
@@ -26,12 +30,17 @@ import { NavUser } from "./nav-user";
 
 const menuItems = [
   {
-    title: "Workflows",
+    title: "Main",
     items: [
       {
         title: "Workflows",
         icon: FolderOpenIcon,
         url: "/workflows",
+      },
+      {
+        title: "Executions",
+        icon: HistoryIcon,
+        url: "/executions",
       },
     ],
   },
