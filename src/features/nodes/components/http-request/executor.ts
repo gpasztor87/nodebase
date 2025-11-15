@@ -1,9 +1,15 @@
+import Handlebars from "handlebars";
 import { NonRetriableError } from "inngest";
 import ky, { type Options as KyOptions } from "ky";
 
 import { type NodeExecutor } from "@/features/nodes/types";
 
 import { httpRequestChannel } from "@/inngest/channels/http-request";
+
+Handlebars.registerHelper(
+  "json",
+  (context) => new Handlebars.SafeString(JSON.stringify(context, null, 2)),
+);
 
 type HttpRequestData = {
   variableName?: string;
@@ -62,13 +68,15 @@ export const httpRequestExecutor: NodeExecutor<HttpRequestData> = async ({
       throw new NonRetriableError("Http Request node: Method not configured.");
     }
 
-    const endpoint = data.endpoint;
+    const endpoint = Handlebars.compile(data.endpoint)(context);
     const method = data.method;
 
     const options: KyOptions = { method };
 
     if (["POST", "PATCH", "PUT"].includes(method)) {
-      options.body = data.body;
+      const resolved = Handlebars.compile(data.body || "{}")(context);
+      JSON.parse(resolved);
+      options.body = resolved;
       options.headers = {
         "Content-Type": "application/json",
       };
