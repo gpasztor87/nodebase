@@ -1,7 +1,6 @@
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { nextCookies } from "better-auth/next-js";
-import { lastLoginMethod } from "better-auth/plugins";
 
 import authConfig from "@/config/auth.config";
 
@@ -14,5 +13,5 @@ export const auth = betterAuth({
     provider: "postgresql",
   }),
 
-  plugins: [nextCookies(), lastLoginMethod()],
+  plugins: [nextCookies()],
 });
